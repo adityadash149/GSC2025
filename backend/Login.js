@@ -9,13 +9,13 @@ import {getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/11.5
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA48GyK9yckhyauJDVEvdSYe2LBzYtIlVU",
-  authDomain: "solution-challenge-455c0.firebaseapp.com",
-  projectId: "solution-challenge-455c0",
-  storageBucket: "solution-challenge-455c0.firebasestorage.app",
-  messagingSenderId: "997273113825",
-  appId: "1:997273113825:web:6dd3081684287ef11453a0",
-  measurementId: "G-JQ0B75WT9C"
+    apiKey: "AIzaSyBs6fQahozg1g3N4wkqmoT7jIMi9W3CtE0",
+    authDomain: "solution-challenge-d1861.firebaseapp.com",
+    projectId: "solution-challenge-d1861",
+    storageBucket: "solution-challenge-d1861.firebasestorage.app",
+    messagingSenderId: "553795053154",
+    appId: "1:553795053154:web:ca8f542ccdac758d18933b",
+    measurementId: "G-HJT2T2D1FK"
 };
 
 // Initialize Firebase
