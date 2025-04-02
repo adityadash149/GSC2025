@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contribute - Vedic VISION</title>
+
+  <!-- Google Fonts: Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* Color Palette */
+    :root {
+      --brown: #875945;
+      --beige: #EED5BB;
+      --purple: #6F4A8E;
+      --light-purple: #7C5FA2;
+    }
+
+    /* Font and Global Styles */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--beige);
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Parallax Header */
+    .parallax-header {
+      background-image: url('/frontend/My Resources/Home2/Contribute/contribute.jpg');
+      height: 390px;
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .parallax-header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(135, 89, 69, 0.452); /* Overlay */
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Card Styles */
+    .ngo-card {
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      background-color: #fff;
+    }
+
+    .ngo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .ngo-card .card-body {
+      background-color: #D4B8A2;
+      padding: 20px;
+    }
+
+    .ngo-card h5 {
+      color: var(--brown);
+      font-weight: bold;
+    }
+
+    /* Selected Card */
+    .ngo-selected {
+      border: 3px #875945;
+    }
+
+    /* Buttons */
+    .btn-primary, .btn-success {
+      border-radius: 50px;
+      padding: 10px 25px;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+
+    .btn-primary:hover, .btn-success:hover {
+      transform: scale(1.05);
+    }
+
+    /* Custom Button */
+    .custom-btn {
+      background-color: var(--purple);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-weight: bold;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .custom-btn:hover {
+      background-color: var(--light-purple);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <!-- Parallax Header -->
+  <div class="parallax-header">
+    <div class="header-content text-center">
+      <h1>Contribute &amp; Inspire</h1>
+      <p>Your donation supports education for underserved communities.</p>
+    </div>
+  </div>
+
+  <!-- Main Contribution Section -->
+  <div class="container text-center mt-4">
+    <div id="ngoList" class="row g-4"></div>
+  </div>
+  
+  <!-- JavaScript -->
+  <script>
+function initMap() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        const service = new google.maps.places.PlacesService(document.createElement('div'));
+        const request = {
+          location: userLocation,
+          radius: '7000',
+          keyword: 'education NGO'
+        };
+        service.nearbySearch(request, (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+            displayNgoList(results);
+          } else {
+            document.getElementById('ngoList').innerHTML = "<p class='text-center'>No nearby NGOs found. Please try again later.</p>";
+          }
+        });
+      },
+      (error) => {
+        document.getElementById('ngoList').innerHTML = "<p class='text-center'>Error retrieving location: " + error.message + "</p>";
+      }
+    );
+  } else {
+    document.getElementById('ngoList').innerHTML = "<p class='text-center'>Geolocation is not supported by your browser.</p>";
+  }
+}
+
+function selectNgo(ngoName, placeId) {
+  const service = new google.maps.places.Place({ placeId: placeId });
+
+  service.getDetails({ fields: ['name', 'website', 'geometry'] }, (place, status) => {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      const lat = place.geometry?.location?.lat();
+      const lng = place.geometry?.location?.lng();
+
+      const websiteButton = place.website
+        ? `<a href="${place.website}" target="_blank" class="btn custom-btn">🌍 Visit Website</a>`
+        : '';
+
+      const directionsButton = (lat && lng)
+        ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" 
+            target="_blank" class="btn custom-btn">📍 Get Directions</a>`
+        : '<p class="text-danger mt-2">Directions unavailable.</p>';
+
+      document.getElementById('ngoList').innerHTML = `
+        <div class="col-12 d-flex justify-content-center">
+          <div class="card ngo-card ngo-selected text-center p-4">
+            <div class="card-body">
+              <h5 class="card-title mb-4">You selected: <strong>${ngoName}</strong></h5>
+              <div class="d-grid gap-3">
+                ${websiteButton}
+                ${directionsButton}
+                <button class="btn custom-btn back-btn">⬅ Back to NGO List</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.querySelector('.back-btn').addEventListener('click', initMap);
+    } else {
+      alert("Could not retrieve NGO details. Please try again.");
+    }
+  });
+}
+
+
+    function displayNgoList(ngos) {
+      let ngoListHtml = '';
+
+      ngos.forEach((ngo) => {
+        const websiteButton = ngo.website 
+          ? `<a href="${ngo.website}" target="_blank" class="btn btn-primary mt-2">Visit Website</a>` 
+          : ''; 
+
+        ngoListHtml += `
+          <div class="col-md-4">
+            <div class="card ngo-card" data-org="${ngo.name}" onclick="selectNgo('${ngo.name.replace(/'/g, "\\'")}', '${ngo.place_id}')">
+              <div class="card-body">
+                <h5 class="card-title">${ngo.name}</h5>
+                <p class="card-text">${ngo.vicinity || ''}</p>
+                ${websiteButton}  
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      document.getElementById('ngoList').innerHTML = ngoListHtml;
+    }
+
+    function selectNgo(ngoName, placeId) {
+      const service = new google.maps.places.PlacesService(document.createElement('div'));
+
+service.getDetails({ placeId: placeId, fields: ['name', 'website', 'geometry'] }, (place, status) => {
+  if (status === google.maps.places.PlacesServiceStatus.OK) {
+    const lat = place.geometry?.location?.lat();
+    const lng = place.geometry?.location?.lng();
+
+    const websiteButton = place.website
+      ? `<a href="${place.website}" target="_blank" class="btn custom-btn">🌍 Visit Website</a>`
+      : '';
+
+    const directionsButton = (lat && lng)
+      ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" 
+          target="_blank" class="btn custom-btn">📍 Get Directions</a>`
+      : '<p class="text-danger mt-2">Directions unavailable.</p>';
+
+    document.getElementById('ngoList').innerHTML = `
+      <div class="col-12 d-flex justify-content-center">
+        <div class="card ngo-card ngo-selected text-center p-4">
+          <div class="card-body">
+            <h5 class="card-title mb-4">You selected: <strong>${ngoName}</strong></h5>
+            <div class="d-grid gap-3">
+              ${websiteButton}
+              ${directionsButton}
+              <button class="btn custom-btn back-btn">⬅ Back to NGO List</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.querySelector('.back-btn').addEventListener('click', initMap);
+  } else {
+    alert("Could not retrieve NGO details. Please try again.");
+  }
+});
+
+}
+
+    window.initMap = initMap;
+  </script>
+
+  <!-- Google API (Use your new API key here) -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvhVtQSTq6fBDBx_NUFKz-zyzUk2TwGVQ&libraries=places&callback=initMap"></script>
+</body>
+</html>

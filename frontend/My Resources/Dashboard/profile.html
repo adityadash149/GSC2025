@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #F3D7B7 0%, #F5E8C7 100%); 
+            font-family: 'Open Sans', sans-serif;
+            color: #5B3D2F;
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+       
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #9B7158;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+        }
+
+        .navbar a {
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #EED5BB;
+            transform: translateY(-2px);
+            display: inline-block;
+        }
+
+        .navbar-buttons {
+            display: flex;
+            gap: 30px;
+        }
+
+        
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: calc(100vh - 60px);
+            width: 90%;
+            max-width: 1100px;
+            margin: 60px auto 0;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            border: 3px solid #7B4DA1; 
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .student-name {
+            margin-top: 15px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #5B3D2F;
+            letter-spacing: 0.5px;
+        }
+
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            background: #9B7158;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn.active {
+            background: #7B4DA1;
+            box-shadow: 0 6px 15px rgba(123, 77, 161, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .tab-btn:hover {
+            background: #8A5E3C;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .content-section {
+            background: #D2A285;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            display: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        
+        #ongoing {
+            max-height: none;
+            overflow: visible;
+        }
+
+        
+        .chapter-box {
+            background: #9B7158;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: #7B4DA1;
+            transition: width 0.3s ease;
+        }
+
+        .chapter-box:hover::before {
+            width: 10px;
+        }
+
+        .chapter-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .chapter-box h3 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chapter-box p {
+            font-size: 16px;
+            margin: 4px 0;
+            opacity: 0.9;
+        }
+
+        .chapter-box span {
+            font-size: 14px;
+            color: #EED5BB;
+            display: block;
+        }
+
+       
+        .upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #F3D7B7;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .upload-container h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #5B3D2F;
+            margin-bottom: 20px;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #7B4DA1;
+            color: white;
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-btn:hover {
+            background: #9B7158;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-input {
+            display: none;
+        }
+
+        .file-display {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #5B3D2F;
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .file-display p {
+            margin: 5px 0;
+        }
+
+        .file-display.uploaded {
+            background: #E8F5E9; 
+            border: 1px solid #4CAF50;
+        }
+
+        .upload-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .confirm-btn {
+            padding: 10px 25px;
+            background: #4CAF50;
+            color: white;
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+       
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+       
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .navbar-buttons {
+                gap: 15px;
+            }
+
+            .navbar a {
+                font-size: 14px;
+            }
+
+            .main-container {
+                width: 95%;
+            }
+
+            .tabs {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .tab-btn {
+                width: 100%;
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .chapter-box h3 {
+                font-size: 20px;
+            }
+
+            .chapter-box p, .chapter-box span {
+                font-size: 14px;
+            }
+
+            .upload-container {
+                padding: 20px;
+            }
+
+            .upload-container h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="navbar">
+    <div class="navbar-buttons">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="/frontend/My Resources/Home2/Home2.html">Home</a>
+    </div>
+</div>
+
+
+<div class="main-container">
+    <div class="profile-container">
+        <div class="profile-pic">
+            <img src="profile.jpg" alt="Profile Picture">
+        </div>
+        <div class="student-name">Student 1</div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('ongoing', this)">On Going</button>
+        <button class="tab-btn" onclick="switchTab('upcoming', this)">Upcoming Classes</button>
+        <button class="tab-btn" onclick="switchTab('upload', this)">Upload Assignments</button>
+    </div>
+
+    <div class="content-container">
+        <div id="ongoing" class="content-section active">
+            <div class="chapter-box">
+                <p>Mathematics (Class 10)</p>
+                <span>Chapter 14</span>
+                <h3>Probability</h3>
+            </div>
+            <div class="chapter-box">
+                <p>English (Class 10)</p>
+                <span>Chapter 1</span>
+                <h3>A Letter to God by G.L.Fuentes</h3>
+            </div>
+            <div class="chapter-box">
+                <p>Science (Class 10)</p>
+                <span>Chapter 2</span>
+                <h3>Acids, Bases and Salts</h3>
+            </div>
+        </div>
+
+        <div id="upcoming" class="content-section">
+            <div class="chapter-box">
+                <p>Science (Class 10)</p>
+                <h3>Physics - Wednesday 12 PM</h3>
+            </div>
+            <div class="chapter-box">
+                <p>Mathematics (Class 10)</p>
+                <h3>Algebra - Thursday 2 PM</h3>
+            </div>
+            <div class="chapter-box">
+                <p>English (Class 10)</p>
+                <h3>Grammar - Friday 3 PM</h3>
+            </div>
+        </div>
+
+        <div id="upload" class="content-section">
+            <div class="upload-container">
+                <h2>Upload Your Assignments</h2>
+                <input type="file" id="fileInput" class="upload-input" accept="application/pdf" multiple onchange="displayFiles()">
+                <label for="fileInput" class="upload-btn">Choose Files</label>
+                <div id="fileDisplay" class="file-display">No files selected</div>
+                <div class="upload-actions">
+                    <button class="confirm-btn" onclick="confirmUpload()">Upload</button>
+                    <button class="confirm-btn" style="background: #f44336;" onclick="clearFiles()">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchTab(tabId, btn) {
+        
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.classList.remove('active');
+        });
+
+       
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.classList.remove('active');
+        });
+
+       
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    function displayFiles() {
+        const fileInput = document.getElementById('fileInput');
+        const fileDisplay = document.getElementById('fileDisplay');
+        const files = Array.from(fileInput.files);
+
+        if (files.length > 0) {
+            fileDisplay.innerHTML = files.map(file => `<p>${file.name}</p>`).join('');
+            fileDisplay.classList.add('uploaded');
+        } else {
+            fileDisplay.innerHTML = 'No files selected';
+            fileDisplay.classList.remove('uploaded');
+        }
+    }
+
+    function confirmUpload() {
+        const fileInput = document.getElementById('fileInput');
+        const fileDisplay = document.getElementById('fileDisplay');
+        const files = fileInput.files;
+
+        if (files.length > 0) {
+           
+            alert('Assignments uploaded successfully!');
+            clearFiles();
+        } else {
+            alert('Please select at least one file to upload.');
+        }
+    }
+
+    function clearFiles() {
+        const fileInput = document.getElementById('fileInput');
+        const fileDisplay = document.getElementById('fileDisplay');
+        fileInput.value = '';
+        fileDisplay.innerHTML = 'No files selected';
+        fileDisplay.classList.remove('uploaded');
+    }
+</script>
+
+</body>
+</html>

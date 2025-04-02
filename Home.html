@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vedic Vision</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #EED5BB;
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #D4B8A2;
+            padding: 15px 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5em;
+            color: #000;
+            text-decoration: none;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-buttons .btn {
+            background-color: #874594;
+            color: white;
+            border-radius: 40px;
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .nav-buttons .btn:hover {
+            background-color: #6b2f7a;
+            transform: translateY(-2px);
+        }
+        .carousel {
+            margin-top: 80px;
+        }
+        .carousel-item img {
+            height: 650px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.329);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+        }
+        .carousel-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .carousel-content p {
+            font-size: 1.2rem;
+        }
+        #intro-section {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 80px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #intro-section.active {
+            opacity: 1;
+        }
+        #intro-section h2 {
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        #intro-section p {
+            font-size: 1.2em;
+            color: #666666;
+            max-width: 700px;
+            margin: auto;
+        }
+        .section {
+            padding: 60px 20px;
+            text-align: left;
+            border-left: 5px solid #000;
+            margin-left: 50px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            margin-bottom: 100px;
+            min-height: 200px;
+        }
+        .section.active {
+            opacity: 1;
+        }
+        .section h2 {
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        .section p {
+            font-size: 1.2em;
+        }
+        /* Footer Styling */
+        footer {
+            background-color: #bea38e; /* Same as navbar background color */
+            color: rgb(2, 2, 2);
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        footer p {
+            margin: 0;
+            font-size: 1.1em;
+        }
+        footer a {
+            color: rgb(2, 2, 2);
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">Vedic Vision</a>
+        <div class="nav-buttons">
+            <button class="btn" id="loginButton">Login</button>
+            <button class="btn" id="signUpButton">Sign Up</button>
+        </div>
+    </nav>
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/frontend/Home/IMG1.jpg" class="d-block w-100" alt="Education Image 1">
+            </div>
+            <div class="carousel-item">
+                <img src="/frontend/Home/IMG2.jpg" class="d-block w-100" alt="Education Image 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/frontend/Home/IMG3.jpg" class="d-block w-100" alt="Education Image 3">
+            </div>
+        </div>
+        <div class="carousel-overlay">
+            <div class="carousel-content">
+                <h1>Smart Learning for a Better Future</h1>
+                <p>Leveraging AI to make education accessible, engaging, and equitable.</p>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+    <section id="intro-section">
+        <h2>Delivering Education to Students Across All Communities</h2>
+        <p>"<em>With this small project, we aim to ignite the light of knowledge and bridge the gap in education, ensuring wisdom reaches every mind. Together, let’s build a future where learning knows no limits! </em>"</p>
+    </section>
+    <section class="section" data-section="goal">
+        <h2>Our Goal</h2>
+        <p>To promote universal access to top-tier education, prioritizing children facing financial barriers.</p>
+    </section>
+
+    <section class="section" data-section="how">
+        <h2>How</h2>
+        <p>Strengthening Communities by Enhancing Educational Access</p>
+    </section>
+
+    <section class="section" data-section="why">
+        <h2>Why</h2>
+        <p>Because every child deserves a chance at Quality Education!</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Vedic Vision. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top < window.innerHeight * 0.8) {
+                    section.classList.add('active');
+                }
+            });
+            const introSection = document.getElementById('intro-section');
+            if (introSection.getBoundingClientRect().top < window.innerHeight * 0.8) {
+                introSection.classList.add('active');
+            }
+        });
+        document.getElementById('loginButton').addEventListener('click', function() {
+            window.location.href = './frontend/Home/Login/Login.html';
+        });
+        document.getElementById('signUpButton').addEventListener('click', function() {
+            window.location.href = './frontend/Home/Signup/SignUp.html';
+        });
+    </script>
+</body>
+</html>

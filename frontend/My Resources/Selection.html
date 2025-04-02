@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class & Subject Selection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="nav-buttons">
+            <select id="classSelect" onchange="loadSubjects()">
+                <option value="">Select Class</option>
+                <option value="1">Class 1</option>
+                <option value="2">Class 2</option>
+                <option value="3">Class 3</option>
+                <option value="4">Class 4</option>
+                <option value="5">Class 5</option>
+                <option value="6">Class 6</option>
+                <option value="7">Class 7</option>
+                <option value="8">Class 8</option>
+                <option value="9">Class 9</option>
+                <option value="10">Class 10</option>
+            </select>
+
+            <select id="subjectSelect" onchange="loadPDF()" disabled>
+                <option value="">Select Subject</option>
+            </select>
+        </div>
+
+        <div class="nav-buttons">
+            <button id="dashBtn" class="dashboard-btn">Dashboard</button>
+            <button id="homeBtn" class="dashboard-btn">Home</button>
+        </div>
+    </div>
+
+    <!-- PDF Viewer Container -->
+    <div id="pdfContainer" class="pdf-container">
+        <p style="text-align: center; colorrng: #5B3D2F; font-weight: bold;">Please select a class and subject to view
+            the book.</p>
+    </div>
+
+    <!-- Chatbot Sidebar -->
+    <div id="chatbotSidebar" class="chatbot-sidebar">
+        <button class="chatbot-btn" id="chatbotBtn">
+            <img src="chat-icon.png" alt="start chat">
+        </button>
+        <div class="chat">
+            <div class="model">
+                <p>Hi, How can I help you?</p>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input placeholder="Ask me anything..." type="text" id="chatInput">
+            <!-- Add Microphone Button with Font Awesome Icon -->
+            <button id="micBtn" class="mic-btn">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button id="sendBtn">
+                <img src="send-icon.png" alt="send">
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // PDF Viewer Logic
+        const pdfMapping = {
+            "1": {
+                "English": "https://drive.google.com/file/d/1KTkC7Sb9o9k_zgm07Du1jp6y1Vn6JGKH/preview",
+                "Mathematics": "https://drive.google.com/file/d/1hIdI3BRjq3lsGWdkFv69blncY5I81-8I/preview",
+                "EVS": "https://drive.google.com/file/d/1JHfoNnsGZ6JX_J8ZwBxnaTjPgJItFGEX/preview",
+                "Hindi": "https://drive.google.com/file/d/14rh41N8z4Bppt0WIYc22pgMTlNTxVoPJ/preview"
+            },
+            "2": {
+                "English": "https://drive.google.com/file/d/1PYDDf2qHNTM6vs61Agveo8ENdzFb34na/preview",
+                "Mathematics": "https://drive.google.com/file/d/10vnOQ1uzxobrF4NCazivpg5g8CWdU-8F/preview",
+                "EVS": "https://drive.google.com/uc?export=download&id=FILE_ID_2_EVS",
+                "Hindi": "https://drive.google.com/file/d/1_sV1Zcom-qJXVOXf6hiYlJs8NytblcAq/preview"
+            },
+            "3": {
+                "English": "https://drive.google.com/file/d/1HUIHnOIUVeZoVy4_LaWd2NROtyhxM_s8/preview",
+                "Mathematics": "https://drive.google.com/file/d/1LsdRriDs3CPrRwK53KBqVKSrajT4CF8S/preview",
+                "EVS": "https://drive.google.com/file/d/1d06uMLqF5alPYTjHn00aE4UCxAMXHViN/preview",
+                "Hindi": "https://drive.google.com/file/d/1rJl-36LMz5hv8_EUIkORNDvyqqQBx3x2/preview"
+            },
+            "4": {
+                "English": "https://drive.google.com/file/d/1hXquM-qOc4QXdPJjWwkDMVXLNN3bwhf2/preview",
+                "Mathematics": "https://drive.google.com/file/d/1-hf49UDSQ5c8LFBtx4TeFag5m1xN_l3Y/preview",
+                "EVS": "https://drive.google.com/file/d/1qt7BkIvCf5w9fwg3U1bu3GrerA6lRoL_/preview",
+                "Hindi": "https://drive.google.com/file/d/1wCYriaCdDQZud1l3BmX51JcQP861mvrH/preview"
+            },
+            "5": {
+                "English": "https://drive.google.com/file/d/1M5k5yCeIFoa1MIWe2bz4i67rTEG29DUz/preview",
+                "Mathematics": "https://drive.google.com/file/d/1K95W6idFD8tl2ZbSsZIKlmjeJ8qOklH9/preview",
+                "EVS": "https://drive.google.com/file/d/1uLh-M-ORMiWU53e8nofIWhQG-JZvVUzC/preview",
+                "Hindi": "https://drive.google.com/file/d/1sjXqDbDHnHyzIHohQ9W8B9-yNNiXM5cK/preview"
+            },
+            "6": {
+                "English": "https://drive.google.com/file/d/1kFkb98nx7pVvFYMBT8dLnLxwoVRJGbZ5/preview",
+                "Mathematics": "https://drive.google.com/file/d/1ERv4zi05apDBjioUbBPjfgMkZ5oXqEhs/preview",
+                "Science": "https://drive.google.com/file/d/1i3k3VX2hQdxWcXthKA_gWR-k0h5KeRk1/preview",
+                "Social Science": "https://drive.google.com/file/d/1RiczVOs5qnzt8yqedlxAJY354ELZo9DV/preview",
+                "Hindi": "https://drive.google.com/file/d/1DwcwXf_1F0MDcPOGcDRAr0OvtFFmtz__/preview",
+                "Sanskrit": "https://drive.google.com/file/d/1wzM-I2xqW6r2FjTsGPGZqEU0ykmPyz-J/preview"
+            },
+            "7": {
+                "English": "https://drive.google.com/file/d/1QyzJPMifooLceWCeHNYGypQ6DsSeAltr/preview",
+                "Mathematics": "https://drive.google.com/file/d/1GDXWFoc502By4LdwV2z6zYBhVL5iHV81/preview",
+                "Science": "https://drive.google.com/file/d/1-DSnr8C-jgbpaN-sKCzpSUziQv6Oy4q1/preview",
+                "Social Science": "https://drive.google.com/file/d/1fErOk0PSG_0tIA74A-PMiQvIwvz-tEvM/preview",
+                "Hindi": "https://drive.google.com/file/d/1LUgkJPdaDvM6Qo4JY_ePphRHRn7m1zMT/preview",
+                "Sanskrit": "https://drive.google.com/file/d/1Z7cB84q6SS1TpWBa1qZr79DUkNEwGCWn/preview"
+            },
+            "8": {
+                "English": "https://drive.google.com/file/d/19pgrBPvHTxOQzeMWizgD8_rS80YsLu1g/preview",
+                "Mathematics": "https://drive.google.com/file/d/1RRoLWyP-jdeoPy4ENnqQs9fH7BzthA0n/preview",
+                "Science": "https://drive.google.com/file/d/1LR-bTl4b9Jal2l2hWBUOhIN3sEPpIEUg/preview",
+                "Social Science": "https://drive.google.com/file/d/1bHAxavGJjkz0L4JbANrUWz6PYDv7CRIX/preview",
+                "Hindi": "https://drive.google.com/file/d/1yt6sIeTJi7lUJLjvkWK-BCuVi9W7RIHb/preview",
+                "Sanskrit": "https://drive.google.com/file/d/1eIiBcHozYmTExYPuwytWvisF36jLqfuN/preview"
+            },
+            "9": {
+                "English": "https://drive.google.com/file/d/19nbGOev8_ul1HMOGIe47WgACghe02_OX/preview",
+                "Mathematics": "https://drive.google.com/file/d/15JTD-_k7V7uRiurOrKytJ-UvhqYbTbh1/preview",
+                "Science": "https://drive.google.com/file/d/1_4a-V31xAPw3cmGNPheqw375OqCOX6Xy/preview",
+                "Social Science": "https://drive.google.com/file/d/1NTxvXKF2YpLyuFU-PglHyLS_nIKnZ0uw/preview",
+                "Hindi": "https://drive.google.com/file/d/1TqXDHCIiNyZFKlh8pQCn5dGJGK5tzpqR/preview",
+                "Sanskrit": "https://drive.google.com/file/d/1Y_AMv9HfT-pgbOHziaGiq6GkdvshAnB3/preview",
+                "Computer Applications": "https://drive.google.com/file/d/1WUUDEhHBAy9aXzmJz_9wu1bR4VHP1cAt/preview"
+            },
+            
+            "10": {
+                "English": "https://drive.google.com/file/d/1PXyMyxh0K2K_GINlOq2alx2lkdJAdzay/preview",
+                "Mathematics": "https://drive.google.com/file/d/1Jk4whtFvS3gxOvlZKRS48KrKsfzUr5Lc/preview",
+                "Science": "https://drive.google.com/file/d/1JurIPvzWGiz9y_GprWixAfWMKtUcNi5N/preview",
+                "Social Science": "https://drive.google.com/file/d/1_06bSQmgu3IZyrfPNvaT_pT5va4YqebL/preview",
+                "Hindi": "https://drive.google.com/file/d/1SNs-BDMAT9v329bF5_96R1w-XW3KdbYM/preview",
+                "Sanskrit": "https://drive.google.com/file/d/1cTeZKdliyJbS3nL1aMn81PbclRSJ4CfG/preview",
+                "Computer Applications": "https://drive.google.com/file/d/18XOStIwtqxNf9XF-MHHcpeUcHfSmr7Xn/preview"
+            }
+        };
+
+        function loadSubjects() {
+            const classSelect = document.getElementById('classSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const selectedClass = classSelect.value;
+
+            subjectSelect.innerHTML = '<option value="">Select Subject</option>';
+            subjectSelect.disabled = true;
+
+            if (selectedClass && pdfMapping[selectedClass]) {
+                subjectSelect.disabled = false;
+                const subjects = Object.keys(pdfMapping[selectedClass]);
+                subjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject;
+                    option.textContent = subject;
+                    subjectSelect.appendChild(option);
+                });
+            }
+        }
+
+        function loadPDF() {
+            const classSelect = document.getElementById('classSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const pdfContainer = document.getElementById('pdfContainer');
+            const selectedClass = classSelect.value;
+            const selectedSubject = subjectSelect.value;
+
+            if (selectedClass && selectedSubject && pdfMapping[selectedClass][selectedSubject]) {
+                const pdfPath = pdfMapping[selectedClass][selectedSubject];
+                pdfContainer.innerHTML = `<iframe src="${pdfPath}" title="${selectedSubject}" style="width:100%; height:100%; border:none;"></iframe>`;
+            } else {
+                pdfContainer.innerHTML = '<p style="text-align: center; color: #5B3D2F; font-weight: bold;">Please select a class and subject to view the book.</p>';
+            }
+        }
+    </script>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
+</script>
+    <script type="module" src="main.js"></script>
+    <script type="module">
+        import { sendMessage, initializeChatbot } from './main.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeChatbot();
+        });
+    </script>
+
+</body>
+
+</html>
