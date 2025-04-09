@@ -1,13 +1,7 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
 import {getAuth, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 import {getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
     apiKey: "AIzaSyBs6fQahozg1g3N4wkqmoT7jIMi9W3CtE0",
@@ -19,7 +13,6 @@ const firebaseConfig = {
     measurementId: "G-HJT2T2D1FK"
   };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
@@ -33,7 +26,6 @@ function showMessage(message, divId){
     },5000);
  }
 
-// Handle Sign Up Event
 const signUp = document.getElementById('submitSignUp');
 signUp.addEventListener("click", (event)=>{
     event.preventDefault();
@@ -73,4 +65,3 @@ signUp.addEventListener("click", (event)=>{
             }
         });
 });
-
