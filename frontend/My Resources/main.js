@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Business information and system instructions for the AI model
 const businessInfo = `
 CBSE Class 1 - English Example
 Topic: Singular and Plural
@@ -70,7 +69,6 @@ Middle School Students (Class 4-8): Provide step-by-step explanations with examp
 High School Students (Class 9-10): Give clear, structured answers with key points. Provide real-world applications.
 `;
 
-// API and model initialization
 const API_KEY = "AIzaSyBvhVtQSTq6fBDBx_NUFKz-zyzUk2TwGVQ";
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({
@@ -80,7 +78,6 @@ const model = genAI.getGenerativeModel({
 
 let messages = { history: [] };
 
-// Language detection for multilingual support
 function detectLanguage(text) {
     const lowerText = text.toLowerCase();
     if (/[\u0980-\u09FF]/.test(text) && (lowerText.includes("হ্যালো") || lowerText.includes("নামতা") || !/[\u0900-\u097F]/.test(text))) return "bn"; // Bengali
