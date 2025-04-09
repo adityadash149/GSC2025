@@ -76,12 +76,11 @@ iframe {
     display: none;
 }
 
-/* Chatbot Sidebar */
 .chatbot-sidebar {
 
     position: fixed;
     top: 0;
-    right: -350px; /* Starts off-screen */
+    right: -350px; 
     width: 350px;
     height: 100%;
     background-color: #FFFFFF;
@@ -94,14 +93,14 @@ iframe {
 }
 
 .chatbot-sidebar.open {
-    right: 0; /* Moves fully into view */
+    right: 0; 
 }
 
-/* Chatbot Icon */
+
 .chatbot-btn {
     position: absolute;
     bottom: 40px;
-    left: -70px; /* Positions it outside the sidebar, moves with it */
+    left: -70px; 
     z-index: 1000;
     background-color: #000000;
     color: white;
@@ -124,7 +123,6 @@ iframe {
     width: 30px;
 }
 
-/* Chatbot Styles */
 :root {
     --primary: #000000;
     --secondary: #875945;
@@ -204,9 +202,9 @@ iframe {
 .chatbot-sidebar .input-area button i {
     font-size: 24px;
 }
-/* Microphone Button Styles */
+
 .chatbot-sidebar .input-area .mic-btn {
-    background-color: var(--secondary); /* Matches the send button's background (#875945) */
+    background-color: var(--secondary); 
     color: white;
     border: none;
     border-radius: 50%;
@@ -220,7 +218,7 @@ iframe {
 }
 
 .chatbot-sidebar .input-area .mic-btn i {
-    font-size: 24px; /* Size of the microphone icon */
+    font-size: 24px; 
 }
 
 .chatbot-sidebar .input-area .mic-btn:hover {
@@ -229,7 +227,7 @@ iframe {
 }
 
 .chatbot-sidebar .input-area .mic-btn.listening {
-    background-color: var(--danger); /* Red color (#EA4335) to indicate listening */
+    background-color: var(--danger); 
 }
 
 
